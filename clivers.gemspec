@@ -8,19 +8,19 @@ Gem::Specification.new do |spec|
   spec.version       = Clivers::VERSION
   spec.authors       = ["Matthieu Vachon"]
   spec.email         = ["matthieu.o.vachon@gmail.com"]
-  spec.description   = "Command line tool versions manager"
-  spec.summary       = <<-EOS
-    This gem has been built to ease switching multiple versions
-    of command line tools like Ruby, Python, Notepad++, etc. It
-    is not installer, it's a tool to switch already installed
-    software.
+  spec.summary       = "Command line tool versions manager"
+  spec.description = <<-EOS
+    This gem has been built to ease usage of multiple versions
+    of command line tools like Ruby, Python, Vagrant, etc. It
+    is not installer, it's a tool to switch between already
+    installed versions of a software.
 
     By using a configuration file and some conventions, the
     tool will be able to locate your program and switch
-    between multiple version of the same command line tool by
-    tweaking the environment variables, usually simply the
-    PATH one.
+    between multiple version of  it be tweaking your
+    environment variables, usually simply the PATH one.
   EOS
+
   spec.homepage      = "https://github.com/maoueh/clivers"
   spec.license       = "MIT"
 
