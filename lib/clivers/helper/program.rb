@@ -1,23 +1,57 @@
 require 'mixlib/versioning'
 require 'pathname'
+require 'set'
+
+require 'clivers/helper/path'
+require 'clivers/helper/pathname'
 
 module Clivers
   module Helper
     module Program
       @@RESOLVERS = {
+        :current => :resolve_current,
         :latest => :resolve_latest,
       }
 
       ##
       # This function expects as fully expanded path
       # and will return the latest release version
-      # of a program.
+      # of a program that is found within this path.
+      #
+      # It expects a fully canonicalize path, i.e.
+      # a path with only forward slashes and not trailing
+      # slashes.
+      #
+      def self.resolve_current(path)
+        versions = Helper::Path.find(/^#{Regexp.quote(path)}/).map do |element|
+          element = Helper::Pathname.canonicalize(element).gsub("#{path}/", "")
+          slash_index = element.index("/")
+          version = slash_index ? element[0..slash_index - 1] : element
+
+          Mixlib::Versioning.parse(version)
+        end.to_set().to_a()
+
+        versions.select! do |version|
+          version != nil
+        end
+
+        return nil if versions.size() == 0
+        return versions[0].to_s() if versions.size() == 1
+
+        versions.map! { |version| version.to_s() }
+      end
+
+      ##
+      # This function expects as fully expanded path
+      # and will return the latest release version
+      # of a program that is found within this path.
       #
       def self.resolve_latest(path)
-        versions = Pathname.glob("#{path}/*").map { |i| i.basename.to_s }
+        versions = ::Pathname.glob("#{path}/*").map { |i| i.basename.to_s }
         latest = Mixlib::Versioning.find_target_version(versions, nil, false, false)
 
-        latest.to_s
+        # Return nil if latest was nil, to string otherwise
+        latest && latest.to_s
       end
 
       ##
