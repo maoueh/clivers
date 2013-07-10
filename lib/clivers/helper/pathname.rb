@@ -10,7 +10,7 @@ module Clivers
       # the two possible path forms on Windows
       # can be determined as identical.
       def self.canonicalize(path)
-        path.gsub("\\", "/").chomp("/")
+        File.expand_path(path).gsub("\\", "/").chomp("/")
       end
     end
   end

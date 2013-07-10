@@ -23,7 +23,8 @@ module Clivers
       # slashes.
       #
       def self.resolve_current(path)
-        versions = Helper::Path.find(/^#{Regexp.quote(path)}/).map do |element|
+        regex = "^#{Regexp.quote(path)}"
+        versions = Helper::Path.find(/#{regex}/).map do |element|
           element = Helper::Pathname.canonicalize(element).gsub("#{path}/", "")
           slash_index = element.index("/")
           version = slash_index ? element[0..slash_index - 1] : element
