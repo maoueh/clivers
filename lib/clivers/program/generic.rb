@@ -5,10 +5,14 @@ require 'clivers/helper/program'
 module Clivers
   module Program
     class Generic
+      attr_reader :name, :path, :executables
+
       def initialize(name, options = {})
-        @name = name
+        @name = name.to_s()
         @path = Helper::Pathname.canonicalize(options.fetch(:path))
-        @executables = options.fetch(:executables, ["."])
+
+        # This trick ensure that we always use an array
+        @executables = [options.fetch(:executables, ["."])].flatten()
       end
 
       def set(version = :latest)
