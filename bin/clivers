@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require 'clivers/cli/clivers/root'
+
+clivers = Clivers::Cli::Clivers::Root.new(ARGV)
+clivers.run()
