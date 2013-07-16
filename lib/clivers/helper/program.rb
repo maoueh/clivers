@@ -14,6 +14,25 @@ module Clivers
       }
 
       ##
+      # Return a list of currently installed version of
+      # the program. The argument must be the path where
+      # the program versions are installed.
+      #
+      def self.list_versions(path)
+        return [] if not path
+
+        versions = ::Pathname.glob("#{path}/*").map do |element|
+          Mixlib::Versioning.parse(element.basename().to_s())
+        end
+
+        versions.select! do |version|
+          version != nil
+        end
+
+        versions.map { |version| version.to_s() }
+      end
+
+      ##
       # This function expects as fully expanded path
       # and will return the latest release version
       # of a program that is found within this path.

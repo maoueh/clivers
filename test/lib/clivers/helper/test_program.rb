@@ -9,6 +9,11 @@ module Clivers
         File.expand_path("#{File.dirname(__FILE__)}/../../../resources/#{name}")
       end
 
+      def test_list()
+        path = get_test_path("test_latest")
+        assert_equal(["1.8.7", "1.9.3"], Helper::Program.list_versions(path))
+      end
+
       def test_resolve()
         path = get_test_path("test_latest")
         assert_equal("1.9.3", Helper::Program.resolve(:latest, path))

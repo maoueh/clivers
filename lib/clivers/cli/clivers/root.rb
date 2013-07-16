@@ -1,3 +1,4 @@
+require 'clivers/cli/clivers/list'
 require 'clivers/cli/clivers/set'
 require 'clivers/cli/clivers/unset'
 require 'clivers/cli/core/composite'
@@ -13,6 +14,7 @@ module Clivers
 
         def subcommands()
           {
+            :list => Cli::Clivers::List,
             :set => Cli::Clivers::Set,
             :unset => Cli::Clivers::Unset,
           }

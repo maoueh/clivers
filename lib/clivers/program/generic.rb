@@ -1,3 +1,5 @@
+require 'pathname'
+
 require 'clivers/helper/path'
 require 'clivers/helper/pathname'
 require 'clivers/helper/program'
@@ -38,6 +40,10 @@ module Clivers
         end
 
         unset_path(version)
+      end
+
+      def list_versions()
+        Helper::Program.list_versions(@path)
       end
 
       def set_path(version)
