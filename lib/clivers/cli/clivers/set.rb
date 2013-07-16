@@ -1,4 +1,6 @@
+require 'clivers'
 require 'clivers/cli/core/base'
+require 'clivers/program/factory'
 
 module Clivers
   module Cli
@@ -28,7 +30,27 @@ module Clivers
         end
 
         def execute()
-          puts "Set"
+          error("You must provide the <program> and the <version> arguments.") if @arguments.empty?()
+          error("You must provide the <version> argument.") if @arguments.size() == 1
+          error("The program [#{@arguments[0]}] is not present in `.clivers` file") if not known_program?(@arguments[0])
+
+          @program = get_program(@arguments[0])
+          @version = @arguments[1]
+
+          @program.set(@version)
+        rescue ArgumentError => exception
+          error(exception.message)
+        end
+
+        def get_program(program)
+          # TODO: This is probably killer to create all the programs because we need
+          #       just one. For now, it will do the job.
+          programs = Program::Factory.create_all(::Clivers.parameters())
+          programs[program.to_sym()]
+        end
+
+        def known_program?(program)
+          ::Clivers.parameters().has?(program.to_sym())
         end
       end
     end

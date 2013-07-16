@@ -26,7 +26,7 @@ module Clivers
         end
 
         def version()
-          puts ::Clivers::VERSION
+          puts "Clivers #{::Clivers::VERSION}"
           exit(0)
         end
       end

@@ -1,5 +1,7 @@
 require 'nugrant/parameters'
 
+require 'clivers/program/generic'
+
 module Clivers
   module Program
     module Factory
@@ -20,9 +22,9 @@ module Clivers
             input
         end
 
-        programs.map do |name, options|
-          create(name, options)
-        end
+        Hash[programs.map do |name, options|
+          [name.to_sym(), create(name, options)]
+        end]
       end
 
       def self.validate(name, options)

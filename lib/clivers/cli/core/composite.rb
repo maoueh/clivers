@@ -7,8 +7,8 @@ module Clivers
         def initialize(arguments = ARGV)
           super(arguments)
 
-          @arguments, @command, @subarguments = split_arguments(arguments)
           @subcommands = subcommands()
+          @arguments, @command, @subarguments = split_arguments(arguments)
 
           raise "You must provide at least one subcommand in #{self.class}" if !@subcommands || @subcommands.empty?()
         end
@@ -55,12 +55,13 @@ module Clivers
         end
 
         def split_arguments(arguments)
-          main_arguments = []
+          main_arguments = arguments
           command = nil
           sub_arguments = []
+          subcommands = @subcommands.map {|key, classname| key.to_s()}
 
           arguments.each_index do |i|
-            if !arguments[i].start_with?("-")
+            if subcommands.include?(arguments[i])
               main_arguments = arguments[0, i]
               command = arguments[i]
               sub_arguments = arguments[i + 1, arguments.length - i + 1]

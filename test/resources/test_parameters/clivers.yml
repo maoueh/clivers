@@ -1,0 +1,12 @@
+ruby:
+  path: "./ruby"
+  executables: "./bin"
+
+python:
+  path: "./python"
+
+java:
+  path: "./java"
+  executables:
+    - "./obj"
+    - "./lib"
